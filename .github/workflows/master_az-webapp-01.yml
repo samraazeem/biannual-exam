@@ -24,8 +24,8 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm install
-        npm run build --prod
-      working-directory: .
+        npm run build --if-present
+        npm run test --if-present
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
@@ -52,5 +52,5 @@ jobs:
       with:
         app-name: 'az-webapp-01'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_81eaa7bd95c049a4ae137cd40596e1bb }}
-        package: ./dist/carousel-demo
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_7e0b0d3fa2e1484cb5c3d79076d18a37 }}
+        package: .
