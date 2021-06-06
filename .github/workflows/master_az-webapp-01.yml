@@ -23,8 +23,9 @@ jobs:
 
     - name: npm install, build, and test
       run: |
+        npm install -g @angular/cli
         npm install
-        npm run build --prod
+        ng build --prod
       working-directory: .
 
     - name: Upload artifact for deployment job
