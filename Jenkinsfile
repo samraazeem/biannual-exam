@@ -7,7 +7,7 @@ pipeline{
     agent any 
     tools{
         maven 'MAVEN'
-        npm 'NPM'
+        //npm 'NPM'
     }
     
     options {
