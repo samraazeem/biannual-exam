@@ -23,7 +23,7 @@ pipeline{
         stage('Build') {
             steps{
                 sh 'npm install'
-                sh 'npm build --prod'  
+                sh 'npm run build'  
             }
         }
         stage('Unit Testing'){
