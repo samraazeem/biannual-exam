@@ -13,7 +13,7 @@ pipeline{
     options {
         skipDefaultCheckout(true)
     }
-    
+
     stages {
         stage("Code Checkout") {
             steps {
@@ -82,22 +82,22 @@ pipeline{
                         sh 'docker run -d --name angular-carousel -p 7200:80 samraazeem/carousel-angular:"$BUILD_NUMBER"'
                     }
                 }***/
-                stage('Docker Deploy Production'){
+               // stage('Docker Deploy Production'){
                     steps{
                         sh 'docker rm -f angular-carousel'
                         sh 'docker run -d --name angular-carousel -p 7300:80 samraazeem/carousel-angular:"$BUILD_NUMBER"'
                     }
-                }
+               // }
             //}  
         } 
         stage('Kubernetes Deployment'){
             //parallel {
-                stage('Docker Deploy Development'){
+            //    stage('Docker Deploy Development'){
                     steps{
                         sh 'kubectl apply -f ./kubernetes/frontend.yaml'
                         sh 'kubectl apply -f ./kubernetes/backend.yaml'
                     }
-                }
+              //  }
               /***  stage('Docker Deploy Production'){
                     steps{
                         sh 'docker run -d --name angular-carousel -p 7300:80 samraazeem/carousel-angular:"$BUILD_NUMBER"'
