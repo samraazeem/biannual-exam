@@ -1,6 +1,6 @@
 pipeline{ 
     environment {
-    registry = "samraazeem/nagp_assignment"
+    registry = "samraazeem/angular-carousel"
     registryCredential = 'docker'
     dockerImage= ''
     }  
@@ -17,7 +17,7 @@ pipeline{
     stages {
         stage("Code Checkout") {
             steps {
-                git url: 'https://github.com/samraazeem/microservice-assignment.git'
+                git url: 'https://github.com/samraazeem/Carousel-Angular.git'
             }
         }
         stage('Build') {
@@ -85,7 +85,7 @@ pipeline{
                // stage('Docker Deploy Production'){
                     steps{
                         sh 'docker rm -f angular-carousel'
-                        sh 'docker run -d --name angular-carousel -p 7300:80 samraazeem/carousel-angular:"$BUILD_NUMBER"'
+                        sh 'docker run -d --name angular-carousel -p 7300:80 samraazeem/angular-carousel:"$BUILD_NUMBER"'
                     }
                // }
             //}  
