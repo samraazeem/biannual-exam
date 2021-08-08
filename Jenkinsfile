@@ -3,16 +3,17 @@ pipeline{
     registry = "samraazeem/nagp_assignment"
     registryCredential = 'docker'
     dockerImage= ''
-  }  
-   agent any 
-   tools{
-     maven 'MAVEN'
-     npm 'NPM'
-}
+    }  
+    agent any 
+    tools{
+        maven 'MAVEN'
+        npm 'NPM'
+    }
     
-options {
-    skipDefaultCheckout(true)
-}
+    options {
+        skipDefaultCheckout(true)
+    }
+    
     stages {
         stage("Code Checkout") {
             steps {
@@ -74,35 +75,35 @@ options {
             }  
         }
         stage('Docker Deployment'){
-            parallel {
+            /***parallel {
                 stage('Docker Deploy Development'){
                     steps{
                         sh 'docker rm -f angular-carousel'
                         sh 'docker run -d --name angular-carousel -p 7200:80 samraazeem/carousel-angular:"$BUILD_NUMBER"'
                     }
-                }
+                }***/
                 stage('Docker Deploy Production'){
                     steps{
                         sh 'docker rm -f angular-carousel'
                         sh 'docker run -d --name angular-carousel -p 7300:80 samraazeem/carousel-angular:"$BUILD_NUMBER"'
                     }
                 }
-            }  
+            //}  
         } 
         stage('Kubernetes Deployment'){
-            parallel {
+            //parallel {
                 stage('Docker Deploy Development'){
                     steps{
-                        sh 'kubectl apply -f ./frontend.yaml'
-                        sh
+                        sh 'kubectl apply -f ./kubernetes/frontend.yaml'
+                        sh 'kubectl apply -f ./kubernetes/backend.yaml'
                     }
                 }
-                stage('Docker Deploy Production'){
+              /***  stage('Docker Deploy Production'){
                     steps{
                         sh 'docker run -d --name angular-carousel -p 7300:80 samraazeem/carousel-angular:"$BUILD_NUMBER"'
                     }
                 }
-            } 
+            } ***/
         } 
     }
 }
