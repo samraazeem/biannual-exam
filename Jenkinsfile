@@ -20,7 +20,7 @@ pipeline{
                 git url: 'https://github.com/samraazeem/Carousel-Angular.git'
             }
         }
-        stage('Build') {
+        /***stage('Build') {
             steps{
                 sh 'npm install'
                 sh 'npm run build'  
@@ -47,10 +47,10 @@ pipeline{
         stage('Docker Image') { 
             steps{
                 
-                /***sh 'docker build -t "samraazeem/angular-carousel":$BUILD_NUMBER"" .'
+                sh 'docker build -t "samraazeem/angular-carousel":$BUILD_NUMBER"" .'
                 script {
                     dockerImage= 'samraazeem/angular-carousel":$BUILD_NUMBER"'
-                }***/
+                }
                 script {
                     dockerImage= docker.build registry + ":$BUILD_NUMBER"
                 }
@@ -81,7 +81,7 @@ pipeline{
                         sh 'docker rm -f angular-carousel'
                         sh 'docker run -d --name angular-carousel -p 7200:80 samraazeem/carousel-angular:"$BUILD_NUMBER"'
                     }
-                }***/
+                }
                // stage('Docker Deploy Production'){
                     steps{
                         sh 'docker rm -f angular-carousel'
@@ -89,13 +89,14 @@ pipeline{
                     }
                // }
             //}  
-        } 
+        } ***/
         stage('Kubernetes Deployment'){
             //parallel {
             //    stage('Docker Deploy Development'){
                     steps{
-                        sh 'kubectl apply -f ./kubernetes/frontend.yaml'
-                        sh 'kubectl apply -f ./kubernetes/backend.yaml'
+                      sh 'echo "kubectl cluster-info"'
+                       // sh 'kubectl apply -f ./kubernetes/frontend.yaml'
+                        //sh 'kubectl apply -f ./kubernetes/backend.yaml'
                     }
               //  }
               /***  stage('Docker Deploy Production'){
