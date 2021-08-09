@@ -94,7 +94,7 @@ pipeline{
             //parallel {
             //    stage('Docker Deploy Development'){
                     steps{
-                      sh 'echo "kubectl cluster-info"'
+                      sh 'echo $(kubectl cluster-info)'
                        // sh 'kubectl apply -f ./kubernetes/frontend.yaml'
                         //sh 'kubectl apply -f ./kubernetes/backend.yaml'
                     }
