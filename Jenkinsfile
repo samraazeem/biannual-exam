@@ -20,7 +20,7 @@ pipeline{
                 git url: 'https://github.com/samraazeem/Carousel-Angular.git'
             }
         }
-        /***stage('Build') {
+        stage('Build') {
             steps{
                 sh 'npm install'
                 sh 'npm run build'  
@@ -31,20 +31,18 @@ pipeline{
                 branch 'development'
             }
             steps{
-               sh 'ng test --codeCoverage=true --watcher=true'
+               sh 'npm run test:coverage'
             } 
-        }
-        stage('SonarQube Analysis'){
             when {
                 branch 'production'
             }
-			steps{
-				withSonarQubeEnv('SONAR'){
-					sh 'npm run sonar'
-				}
-			}
-		}
-        stage('Docker Image') { 
+			      steps{
+				        withSonarQubeEnv('SONAR'){
+					          sh 'npm run sonar'
+				        }
+			      }
+		    }
+        /***stage('Docker Image') { 
             steps{
                 
                 sh 'docker build -t "samraazeem/angular-carousel":$BUILD_NUMBER"" .'
@@ -75,7 +73,7 @@ pipeline{
             }  
         }
         stage('Docker Deployment'){
-            /***parallel {
+          parallel {
                 stage('Docker Deploy Development'){
                     steps{
                         sh 'docker rm -f angular-carousel'
@@ -89,7 +87,7 @@ pipeline{
                     }
                // }
             //}  
-        } ***/
+        } 
         stage('Kubernetes Deployment'){
             //parallel {
             //    stage('Docker Deploy Development'){
@@ -99,12 +97,12 @@ pipeline{
                         //sh 'kubectl apply -f ./kubernetes/backend.yaml'
                     }
               //  }
-              /***  stage('Docker Deploy Production'){
+                stage('Docker Deploy Production'){
                     steps{
                         sh 'docker run -d --name angular-carousel -p 7300:80 samraazeem/carousel-angular:"$BUILD_NUMBER"'
                     }
                 }
-            } ***/
-        } 
+            } 
+        } ***/
     }
 }
